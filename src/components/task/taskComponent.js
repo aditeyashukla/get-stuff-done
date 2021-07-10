@@ -6,6 +6,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { withStyles } from '@material-ui/core/styles';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import RadioButtonUncheckedOutlinedIcon from '@material-ui/icons/RadioButtonUncheckedOutlined';
+import Divider from '@material-ui/core/Divider';
 
 import './taskComponent.css'
 
@@ -65,15 +66,14 @@ export default function TaskComponent() {
             </ContextMenuTrigger>
             <ContextMenu id="same_unique_identifier">
                 <MenuItem data={{ foo: 'bar' }} onClick={handleClick}>
-                    ContextMenu Item 1
+                    Edit Task
                 </MenuItem>
+                <Divider className={'context-menu-divider'}/>
                 <MenuItem data={{ foo: 'bar' }} onClick={handleClick}>
-                    ContextMenu Item 2
+                    Delete Task
                 </MenuItem>
-                <MenuItem divider />
-                <MenuItem data={{ foo: 'bar' }} onClick={handleClick}>
-                    ContextMenu Item 3
-                </MenuItem>
+                
+
             </ContextMenu>
         </>
     )

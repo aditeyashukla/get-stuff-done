@@ -7,15 +7,11 @@ import "firebase/auth";
 import { firebaseConfig } from './firebase';
 import {
   FirebaseAuthProvider,
-  FirebaseAuthConsumer,
-  IfFirebaseAuthed,
-  IfFirebaseAuthedAnd
+  FirebaseAuthConsumer
 } from "@react-firebase/auth";
 
 //Material UI imports
 import { makeStyles } from '@material-ui/core/styles';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import Paper from '@material-ui/core/Paper';
 // import Fab from '@material-ui/core/Fab';
 
@@ -24,7 +20,6 @@ import HomeIcon from '@material-ui/icons/Home';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import SettingsIcon from '@material-ui/icons/Settings';
 import AddIcon from '@material-ui/icons/Add';
-import MenuIcon from '@material-ui/icons/Menu';
 
 //Fab menu
 import { Fab, Action } from 'react-tiny-fab';
@@ -55,11 +50,6 @@ const useStyles = makeStyles({
 function App() {
   const classes = useStyles();
   const [value, setValue] = React.useState('home');
-  const [fabH, setfabH] = React.useState(0)
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   const PageReturn = () => {
     switch (value) {
@@ -73,38 +63,7 @@ function App() {
         return 'home'
     }
   }
-  // const theme = useTheme();
-  // const transitionDuration = {
-  //   enter: theme.transitions.duration.enteringScreen,
-  //   exit: theme.transitions.duration.leavingScreen,
-  // };
-
-  // const fabs = [
-  //   {
-  //     color: 'primary',
-  //     className: classes.fab,
-  //     icon: <AddIcon />,
-  //     label: 'Add',
-  //     textLabel:"",
-  //     variant: '',
-  //   },
-  //   {
-  //     color: 'primary',
-  //     className: classes.fab,
-  //     icon: <AddIcon />,
-  //     label: 'Add',
-  //     textLabel:"Add New Task",
-  //     variant: 'extended'
-  //   }
-
-  // ];
-
-  function fabHover() {
-    setfabH(1)
-  }
-  function fabOut() {
-    setfabH(0)
-  }
+  
   return (
     <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
       <div className="App">
