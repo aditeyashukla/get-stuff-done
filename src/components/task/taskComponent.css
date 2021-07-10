@@ -1,0 +1,29 @@
+.task-paper{
+    margin: 1% 0 0 0;
+    padding: 0.5% 0 0.5% 1% !important;
+    font-size: 20px !important;
+    color: #fff !important;
+}
+
+.reccuring{
+    background-image: linear-gradient(to right, #485051, #485051 99.2%, #a9e3f3 99.2%, #a9e3f3 100%) !important;
+}
+
+.one-time{
+    background-image: linear-gradient(to right, #485051, #485051 99.2%, #f3c1a9 99.2%, #f3c1a9 100%) !important;
+}
+.task-name{
+    margin-top: 0.7% !important;
+}
+
+.task-days{
+    margin-top: 0.7% !important;
+    color: #8e8e8e;
+}
+
+.task-type{
+    height: 100%;
+    width: 12px;
+    background: white;
+    float: right;
+}
