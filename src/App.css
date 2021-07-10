@@ -11,6 +11,31 @@
  /* width: 100vw; */
 }
 
+.rtf--mb{
+    background: #a9e3f3 !important;
+    color: #616161!important;
+    /* transition: ease-in-out 0.2s !important; */
+}
+
+.rtf{
+  bottom: 0em !important;
+  right: 4% !important;
+}
+
+.rtf--ab{
+  background: #a9e3f3 !important;
+  color: #616161!important;
+  transition: ease-in-out 0.2s !important;
+}
+
+.rtf--ab:hover{
+  color: #a9e3f3 !important;
+  background: #616161!important;
+}
+
+.rtf--ab__c>span{
+  background-color: #2d2f2f !important;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

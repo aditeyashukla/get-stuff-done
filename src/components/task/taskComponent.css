@@ -27,3 +27,40 @@
     background: white;
     float: right;
 }
+
+/* Strikethrough */
+
+.strikethrough {
+	display: inline-block;
+	position: relative;
+	transition: all 0.5s cubic-bezier(.55, 0, .1, 1);
+}
+
+.strikethrough:after {
+	content: '';
+    position: absolute;
+    display: block;
+    width: 120%;
+    margin-left: -7px;
+    height: 2px;
+    box-shadow: 0 1px rgb(160 160 160 / 60%);
+    margin-top: -0.6em;
+    background: #fffbfb78;
+    transform-origin: center left;
+    animation-name: strikethrough;
+    animation-duration: 1s;
+    animation-timing-function: cubic-bezier(.55, 0, .1, 1);
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards; 
+}
+
+/* Keyframes for initial animation */
+
+@keyframes strikethrough {
+	from {
+		transform: scaleX(0);
+	}
+	to {
+		transform: scaleX(1);
+	}
+}
