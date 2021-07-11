@@ -84,7 +84,8 @@
   background-color: #485051 ;
   color: #a9e3f3;
   padding: 5px;
-  border:rgb(160 160 160 / 60%) solid 1px
+  border:rgb(160 160 160 / 60%) solid 1px;
+  z-index: 9999
 }
 .react-contextmenu-item{
   margin-top:5px;
@@ -97,4 +98,45 @@ cursor: pointer;
 }
 .context-menu-divider{
   background-color: #a9e3f3 !important;
+}
+
+.MuiButton-outlinedPrimary{
+  background-color: #485051 !important;
+  color: #a9e3f3 !important;
+  border: 1px solid #a9e3f3 !important;
+}
+
+.timepick{
+  color: #a9e3f3 !important;
+}
+
+.react-time-picker__inputGroup__input{
+  color: #a9e3f3 !important;
+}
+
+.react-time-picker__button{
+  color: #2d2f2f !important;
+}
+
+.react-time-picker__button:hover{
+  color: #a9e3f3 !important;
+}
+.MuiButton-containedPrimary{
+  background: #a9e3f3 !important;
+color: #616161!important;
+border: 1px solid #a9e3f3 !important;
+}
+
+
+
+.MuiFormLabel-root {
+  color: #a8a8a8 !important
+}
+
+.MuiInput-underline:after {
+  border-bottom: 2px solid #3b3b3b !important
+}
+
+.MuiInputBase-input{
+  color: #ffffff !important
 }
