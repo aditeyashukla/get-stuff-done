@@ -45,6 +45,8 @@ import TimePicker from 'react-time-picker';
 import LoginPage from './components/login/loginPage';
 import HomePage from './components/homepage/homePage';
 
+import TaskDataService from './services/task.service';
+
 const useStyles = makeStyles({
   bottomNav: {
     width: '100%',
@@ -145,22 +147,7 @@ function App() {
         "time": modalTime,
         "complete": false
       }
-      let allTasksRef = firebase.database().ref(`${uid}/all_tasks`);
-
-      let key = allTasksRef.push(task_object);
-      dayList.map(day => {
-        let userWeekRef = firebase.database().ref(`${uid}/user_week/${day}/tasks`);
-        let oldTasks = []
-        userWeekRef.on('value', (snap) => {
-          if (snap.val() !== null) {
-            console.log("tes", snap.val())
-            oldTasks = snap.val()
-          }
-        });
-        oldTasks.push(key.key)
-        userWeekRef.set(oldTasks)
-
-      })
+      TaskDataService.create(task_object,uid)
       setModalOpen(false)
     }
   }

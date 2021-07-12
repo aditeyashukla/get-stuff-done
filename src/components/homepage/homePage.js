@@ -41,16 +41,20 @@ export default class HomePage extends React.Component {
     }
 
     onDataChange(items) {
-        
+
         let tasks = [];
         let uobj = items.val()
-        let day = 0;//this.today.getDay().toString()
-        
-        let tasks_for_day = uobj['user_week'][day]['tasks']
-        if(tasks_for_day ){
-            tasks = tasks_for_day.map(tsk=>uobj['all_tasks'][tsk])
+        let day = this.today.getDay().toString()
+        if (uobj === null) {
+            TaskDataService.make_user_obj(this.props.user)
+        } else {
+            let tasks_for_day = uobj['user_week'][day]['tasks']
+            if (tasks_for_day) {
+                tasks = tasks_for_day.map(tsk => uobj['all_tasks'][tsk])
+            }
+            this.setState({ tasks: tasks, taskKeys: tasks_for_day })
         }
-        this.setState({tasks: tasks, taskKeys: tasks_for_day})
+
     }
 
     dayToday = (num) => {
@@ -80,11 +84,11 @@ export default class HomePage extends React.Component {
     }
 
     render() {
-        
+
         return (
             <FirebaseAuthConsumer>
                 {({ isSignedIn, user, providerId }) => {
-                    
+
                     return (
                         <Grid
                             className={'home-head'}
@@ -102,11 +106,11 @@ export default class HomePage extends React.Component {
 
                             <Grid item sm={12} className={'text-stack'}>
 
-                                {this.state.tasks.map((task,idx) => {
-                                    
-                                    return <TaskComponent key={"task-"+idx} task={task} taskKey={this.state.taskKeys[idx]} open={this.props.open} 
-                                    setName={this.props.setName} setRep={this.props.setRep} setDays={this.props.setDays} 
-                                    setTime={this.props.setTime} setEdit={this.props.setEdit} setEditTaskID={this.props.setEditTaskID}/>
+                                {this.state.tasks.map((task, idx) => {
+
+                                    return <TaskComponent key={"task-" + idx} user={user.uid} task={task} taskKey={this.state.taskKeys[idx]} open={this.props.open}
+                                        setName={this.props.setName} setRep={this.props.setRep} setDays={this.props.setDays}
+                                        setTime={this.props.setTime} setEdit={this.props.setEdit} setEditTaskID={this.props.setEditTaskID} />
                                 })}
 
 

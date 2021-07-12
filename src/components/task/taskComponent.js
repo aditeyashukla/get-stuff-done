@@ -11,6 +11,8 @@ import RadioButtonUncheckedOutlinedIcon from '@material-ui/icons/RadioButtonUnch
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
+import TaskDataService from '../../services/task.service';
+
 import './taskComponent.css'
 
 import {
@@ -27,8 +29,9 @@ const MENU_ID = "menu-id";
 
 export default function TaskComponent(props) {
     let t = props.task;
-    let id = props.taskId
-    const [complete, setComplete] = useState(false); //task complete
+    let id = props.taskKey
+    let user = props.user
+    const [complete, setComplete] = useState(t.complete); //task complete
     let rec = t.repeat; //reccuring
     let col = rec ? '#a9e3f3' : '#f3c1a9'
 
@@ -52,6 +55,7 @@ export default function TaskComponent(props) {
         let element = e.target
         setComplete(element.checked)
         element.classList.toggle("strikethrough");
+        TaskDataService.changeTaskStatus(user,id,element.checked)
     }
 
     function returnDTString(days, time) {
@@ -59,9 +63,9 @@ export default function TaskComponent(props) {
         let daystring = ""
         for (let i = 0; i < days.length; i++) {
             if (i !== 0) {
-                daystring = daystring + `/${dayNames[i]}`
+                daystring = daystring + `/${dayNames[days[i]]}`
             } else {
-                daystring = daystring + `${dayNames[i]}`
+                daystring = daystring + `${dayNames[days[i]]}`
             }
         }
         return time === undefined ? daystring : daystring + " " + tConvert(time)
