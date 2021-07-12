@@ -4,8 +4,12 @@ import Grid from '@material-ui/core/Grid';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { withStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import RadioButtonUncheckedOutlinedIcon from '@material-ui/icons/RadioButtonUncheckedOutlined';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import './taskComponent.css'
 
@@ -113,8 +117,11 @@ export default function TaskComponent(props) {
                         <Grid item sm={6} className={"task-name"} >
                             <p className={complete ? "strikethrough" : undefined} style={{ margin: 0 }}>{t.name}</p>
                         </Grid>
-                        <Grid item sm={5} className={"task-days"} ><p className={complete ? "strikethrough" : undefined} style={{ margin: 0 }}>{returnDTString(t.days, t.time)}</p></Grid>
-
+                        <Grid item sm={4} className={"task-days"} ><p className={complete ? "strikethrough" : undefined} style={{ margin: 0 }}>{returnDTString(t.days, t.time)}</p></Grid>
+                        <Grid item sm={1} className={"task-icons"}>
+                            <IconButton aria-label="edit" onClick={editTask}><EditIcon /></IconButton>
+                            <IconButton aria-label="delete" ><DeleteIcon /></IconButton>
+                        </Grid>
 
                     </Grid>
                 </Paper>

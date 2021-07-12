@@ -28,6 +28,25 @@
     float: right;
 }
 
+.task-icons .MuiIconButton-root{
+    padding: 0 ;
+    padding-top: 8.7% !important;
+}
+.task-icons .MuiIconButton-root:hover{
+    background-color: transparent !important;
+    cursor: default;
+}
+.task-icons .MuiSvgIcon-root{
+    float: right;
+    margin-right: 15px;
+    color: #828282;
+    transition: ease-in 0.2s;
+}
+.task-icons .MuiSvgIcon-root:hover{
+    color: #ebebeb;
+    cursor: pointer;
+}
+
 /* Strikethrough */
 
 .strikethrough {
@@ -64,4 +83,3 @@
 		transform: scaleX(1);
 	}
 }
-
