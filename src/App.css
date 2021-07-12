@@ -80,23 +80,23 @@
   }
 }
 
-.react-contextmenu{
-  background-color: #485051 ;
+.react-contexify__theme--dark{
+  background-color: #485051 !important;
   color: #a9e3f3;
-  padding: 5px;
+  padding: 5px !important;
   border:rgb(160 160 160 / 60%) solid 1px;
-  z-index: 9999
+  box-shadow: 5px 10px 10px -5px rgb(0 0 0 / 30%) !important;
 }
-.react-contextmenu-item{
-  margin-top:5px;
-  margin-bottom: 5px;
+.react-contexify__item__content{
+  color: #a9e3f3 !important
 }
-.react-contextmenu-item:hover{
+
+.react-contexify__item__content:hover{
   background: #a9e3f3 !important;
 color: #616161!important;
-cursor: pointer;
+
 }
-.context-menu-divider{
+.react-contexify__separator{
   background-color: #a9e3f3 !important;
 }
 

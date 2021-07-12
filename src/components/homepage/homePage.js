@@ -5,13 +5,12 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 
 import "firebase/database";
-
 import "firebase/auth";
 import {
     FirebaseAuthConsumer
 } from "@react-firebase/auth";
-import TaskComponent from '../task/taskComponent';
 
+import TaskComponent from '../task/taskComponent';
 import TaskDataService from '../../services/task.service';
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -107,7 +106,7 @@ export default class HomePage extends React.Component {
                                     
                                     return <TaskComponent key={"task-"+idx} task={task} taskKey={this.state.taskKeys[idx]} open={this.props.open} 
                                     setName={this.props.setName} setRep={this.props.setRep} setDays={this.props.setDays} 
-                                    setTime={this.props.setTime} setEdit={this.props.setEdit}/>
+                                    setTime={this.props.setTime} setEdit={this.props.setEdit} setEditTaskID={this.props.setEditTaskID}/>
                                 })}
 
 
