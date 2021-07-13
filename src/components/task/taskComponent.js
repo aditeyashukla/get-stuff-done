@@ -28,6 +28,7 @@ import "react-contexify/dist/ReactContexify.css";
 const MENU_ID = "menu-id";
 
 export default function TaskComponent(props) {
+    
     let t = props.task;
     let id = props.taskKey
     let user = props.user
@@ -102,6 +103,9 @@ export default function TaskComponent(props) {
         props.open(true)
     }
 
+    function deleteTask(){
+        TaskDataService.delete(user, id)
+    }
     return (
         <>
             <div onContextMenu={show}>
@@ -124,7 +128,7 @@ export default function TaskComponent(props) {
                         <Grid item sm={4} className={"task-days"} ><p className={complete ? "strikethrough" : undefined} style={{ margin: 0 }}>{returnDTString(t.days, t.time)}</p></Grid>
                         <Grid item sm={1} className={"task-icons"}>
                             <IconButton aria-label="edit" onClick={editTask}><EditIcon /></IconButton>
-                            <IconButton aria-label="delete" ><DeleteIcon /></IconButton>
+                            <IconButton aria-label="delete" onClick={deleteTask} ><DeleteIcon /></IconButton>
                         </Grid>
 
                     </Grid>
@@ -135,7 +139,7 @@ export default function TaskComponent(props) {
                     Edit Task
                 </Item>
                 <Separator />
-                <Item onClick={handleItemClick}>
+                <Item onClick={deleteTask}>
                     Delete Task
                 </Item>
             </Menu>

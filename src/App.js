@@ -147,7 +147,12 @@ function App() {
         "time": modalTime,
         "complete": false
       }
-      TaskDataService.create(task_object,uid)
+      if(taskEdit){
+        TaskDataService.editTask(uid, editTaskID, task_object)
+      }else{
+        TaskDataService.create(task_object,uid)
+      }
+      
       setModalOpen(false)
     }
   }
@@ -262,7 +267,7 @@ function App() {
                             onChange={e => setModalTime(e)}
                           />
                           <br />
-                          <Button type="submit" onClick={e => addNewTask(e, user.uid)} className={classes.weekdays} variant={"contained"}>Add Task</Button>
+                          <Button type="submit" onClick={e => addNewTask(e, user.uid)} className={classes.weekdays} variant={"contained"}>{taskEdit ? "Edit Task" : "Add Task"}</Button>
                           <br />
                           <p>{modalError}</p>
                         </FormControl>

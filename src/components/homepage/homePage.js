@@ -41,9 +41,10 @@ export default class HomePage extends React.Component {
     }
 
     onDataChange(items) {
-
+        
         let tasks = [];
         let uobj = items.val()
+        console.log(uobj)
         let day = this.today.getDay().toString()
         if (uobj === null) {
             TaskDataService.make_user_obj(this.props.user)
@@ -107,10 +108,12 @@ export default class HomePage extends React.Component {
                             <Grid item sm={12} className={'text-stack'}>
 
                                 {this.state.tasks.map((task, idx) => {
-
-                                    return <TaskComponent key={"task-" + idx} user={user.uid} task={task} taskKey={this.state.taskKeys[idx]} open={this.props.open}
+                                    if(task){
+                                        return <TaskComponent key={"task-" + idx} user={user.uid} task={task} taskKey={this.state.taskKeys[idx]} open={this.props.open}
                                         setName={this.props.setName} setRep={this.props.setRep} setDays={this.props.setDays}
                                         setTime={this.props.setTime} setEdit={this.props.setEdit} setEditTaskID={this.props.setEditTaskID} />
+                                    }
+                                    
                                 })}
 
 
