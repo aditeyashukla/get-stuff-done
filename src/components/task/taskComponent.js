@@ -34,7 +34,7 @@ export default function TaskComponent(props) {
     let user = props.user
     const [complete, setComplete] = useState(t.complete); //task complete
     let rec = t.repeat; //reccuring
-    let col = rec ? '#a9e3f3' : '#f3c1a9'
+    let col = rec ? '#a9e3f3' : '#99c7b9'
 
     const { show } = useContextMenu({ id: MENU_ID });
 

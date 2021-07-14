@@ -36,6 +36,7 @@ class TaskDataService {
   }
 
   clearPastWeek(user, day_no) {
+    //get user obj
     //for each day from 0 to <day_no , go through userweek in that day
     //if NOT checked
     //for each task
@@ -45,7 +46,52 @@ class TaskDataService {
     //remove day from task days
     //if days empty then remove task entirely
     //set day checked true
-
+    //console.log("getting reff",user)
+    let uoref = firebase.database().ref(`${user}`)
+    //console.log("starting")
+    uoref.get().then((snap) => {
+      if (snap.val() !== null) {
+        let uobj = snap.val()
+        let actu_day = day_no === 0 ? 7 : day_no
+        for(let pd=0;pd<actu_day;pd++){
+          if(!uobj['user_week'][pd]['checked']){
+            console.log("checking day ",pd)
+            if('tasks' in uobj['user_week'][pd]){
+              let tasks_for_week = uobj['user_week'][pd]['tasks'].slice()
+              tasks_for_week.map(id=>{
+                if(uobj['all_tasks'][id]['repeat']){
+                  uobj['all_tasks'][id]['complete'] = false
+                }else{
+                  const index = uobj['user_week'][pd]['tasks'].indexOf(id);
+                  if (index > -1) {
+                    uobj['user_week'][pd]['tasks'].splice(index, 1);
+                  }
+                  const index_of_day = uobj['all_tasks'][id]['days'].indexOf(pd);
+                  if (index_of_day > -1) {
+                    uobj['all_tasks'][id]['days'].splice(index_of_day, 1);
+                  }
+                  if(uobj['all_tasks'][id]['days'].length < 1){
+                    const index_of_task = uobj['all_tasks'].indexOf(id);
+                    if (index_of_task > -1) {
+                      uobj['all_tasks'].splice(index_of_task, 1);
+                    }
+                  }
+                }
+              })
+            }
+            uobj['user_week'][pd]['checked'] = true
+            //set day 
+          let rev_pd = pd === 7 ? 0 : pd
+          console.log("set day",rev_pd,uobj['user_week'][pd])
+          firebase.database().ref(`${user}/user_week/`).child(rev_pd.toString()).set(uobj['user_week'][pd])
+          }
+          
+        }
+        //set all tasks
+        //console.log("set all tasks",uobj['all_tasks'])
+        uoref.child('all_tasks').set(uobj['all_tasks'])
+      }
+    })
   }
 
   create(task_object, uid) {
@@ -66,6 +112,8 @@ class TaskDataService {
         oldTasks.push(key)
         console.log("adding",oldTasks)
         userWeekRef.set(oldTasks)
+      }else{
+        firebase.database().ref(`${uid}/user_week/${day}`).child('tasks').set([key])
       }
     })
     

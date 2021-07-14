@@ -22,7 +22,7 @@ export default function LoginPage() {
                 <Button variant="contained" color="primary" size="large" 
                 onClick={() => {
                         const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-                        firebase.auth().signInWithPopup(googleAuthProvider);
+                        firebase.auth().signInWithRedirect(googleAuthProvider);
                     }}>
                     Sign In with Google
                 </Button>

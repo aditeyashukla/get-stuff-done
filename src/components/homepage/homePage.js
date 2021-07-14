@@ -40,12 +40,13 @@ export default class HomePage extends React.Component {
         TaskDataService.get_user_obj(this.userID).off("value", this.onDataChange);
     }
 
-    onDataChange(items) {
-        
+    onDataChange(items) {   
         let tasks = [];
         let uobj = items.val()
         console.log(uobj)
         let day = this.today.getDay().toString()
+        //CLEAR WEEK
+        TaskDataService.clearPastWeek(this.props.user.uid, day)
         if (uobj === null) {
             TaskDataService.make_user_obj(this.props.user)
         } else {
@@ -55,7 +56,6 @@ export default class HomePage extends React.Component {
             }
             this.setState({ tasks: tasks, taskKeys: tasks_for_day })
         }
-
     }
 
     dayToday = (num) => {
