@@ -43,10 +43,10 @@ export default class HomePage extends React.Component {
     onDataChange(items) {   
         let tasks = [];
         let uobj = items.val()
-        console.log(uobj)
+        // console.log(uobj)
         let day = this.today.getDay().toString()
-        //CLEAR WEEK
-        TaskDataService.clearPastWeek(this.props.user.uid, day)
+        //CLEAR WEEK MOVED TO APP
+        // TaskDataService.clearPastWeek(this.props.user.uid, day)
         if (uobj === null) {
             TaskDataService.make_user_obj(this.props.user)
         } else {

@@ -102,6 +102,7 @@ function App() {
   const [modalError, setModalError] = React.useState("")
   const [taskEdit, setTaskEdit] = React.useState(false)
   const [editTaskID, setEditTaskID] = React.useState("")
+  const [clearedWeek, setWeekClear] = React.useState(false)
 
   const PageReturn = (user) => {
     console.log("AAA")
@@ -130,9 +131,9 @@ function App() {
   async function addNewTask(e, uid) {
     e.preventDefault()
     setModalError("")
-    console.log(modalDays)
+    //console.log(modalDays)
     let dayList = Object.keys(modalDays).filter(key => modalDays[key])
-    console.log(dayList)
+    //console.log(dayList)
 
 
     if (dayList.length < 1) {
@@ -164,6 +165,7 @@ function App() {
     setModalTime(null)
     setModalError("")
   }
+  
   return (
 
     <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
@@ -179,7 +181,13 @@ function App() {
         </button> */}
           <FirebaseAuthConsumer>
             {({ isSignedIn, user, providerId }) => {
-
+              if(isSignedIn && !clearedWeek){
+                let day = (new Date()).getDay().toString()
+                //CLEAR WEEK
+                console.log("CLEARING WEEK")
+                TaskDataService.clearPastWeek(user.uid, day)
+                setWeekClear(true)
+              }
               return isSignedIn ? (<>
 
                 <HomePage key={"home"} user={user} open={setModalOpen} setName={setmodalTaskName}
