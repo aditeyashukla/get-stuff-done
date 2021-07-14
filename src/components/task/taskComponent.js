@@ -93,7 +93,6 @@ export default function TaskComponent(props) {
     }
 
     function editTask() {
-        console.log(t.days)
         props.setName(t.name)
         props.setRep(t.repeat)
         props.setEditTaskID(id)

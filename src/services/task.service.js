@@ -152,8 +152,9 @@ class TaskDataService {
         //check if days changed
         let [addDays, deleteDays] = this.daysChanged(all_tasks[key]['days'], task['days'])
         //update in all tasks
-
-        all_task_ref.child(key).set(task)
+        if(task['time'] === undefined){task['time'] = null}
+        console.log("updating",key,task)
+        all_task_ref.child(key).update(task)
         //for each in days added, add to user week
         //for each in days deleted, add to user week
         addDays.map(ad => {
