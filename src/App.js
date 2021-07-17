@@ -44,6 +44,8 @@ import TimePicker from 'react-time-picker';
 //Local Components
 import LoginPage from './components/login/loginPage';
 import HomePage from './components/homepage/homePage';
+import WeekView from './components/weekview/weekViewPage';
+import SettingsPage from './components/settings/settingsPage';
 
 import TaskDataService from './services/task.service';
 
@@ -59,9 +61,12 @@ const useStyles = makeStyles({
   },
   mainPaper: {
     width: '90%',
-    height: '98%',
+    height: '100vh',
     margin: '0% 5% 3% 5%',
-    backgroundColor: '#2d2f2f'
+    backgroundColor: '#2d2f2f',
+    overflowY: 'auto',
+    overflowX: 'hidden',
+    scrollBehavior: 'smooth'
   },
   modal: {
     display: 'flex',
@@ -172,13 +177,7 @@ function App() {
       <div className="App">
         <Paper className={classes.mainPaper} elevation={3}>
 
-          {/* <button
-          onClick={() => {
-            firebase.auth().signOut();
-          }}
-        >
-          Sign Out
-        </button> */}
+          
           <FirebaseAuthConsumer>
             {({ isSignedIn, user, providerId }) => {
               if(isSignedIn && !clearedWeek){
@@ -189,10 +188,20 @@ function App() {
                 setWeekClear(true)
               }
               return isSignedIn ? (<>
-
+                {value === "home" &&
                 <HomePage key={"home"} user={user} open={setModalOpen} setName={setmodalTaskName}
+                setRep={setModalRepeating} setDays={setModalDays} setTime={setModalTime} setEdit={setTaskEdit}
+                setEditTaskID={setEditTaskID} />
+                }
+                {value === "weekview" &&
+                  <WeekView key={"home"} user={user} open={setModalOpen} setName={setmodalTaskName}
                   setRep={setModalRepeating} setDays={setModalDays} setTime={setModalTime} setEdit={setTaskEdit}
                   setEditTaskID={setEditTaskID} />
+                }
+                {value === "settings" &&
+                  <SettingsPage/>
+                }
+                
                 <Fab
                   // mainButtonStyles={mainButtonStyles}
                   // actionButtonStyles={actionButtonStyles}

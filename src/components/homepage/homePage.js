@@ -94,7 +94,7 @@ export default class HomePage extends React.Component {
                         <Grid
                             className={'home-head'}
                             container
-                            direction="row"
+                            direction="column"
                             justifyContent="flex-start"
                             alignItems="flex-start"
                         >
@@ -105,7 +105,7 @@ export default class HomePage extends React.Component {
                             </Grid>
                             <Divider light={true} style={{ width: '100%' }} />
 
-                            <Grid item sm={12} className={'text-stack'}>
+                            <Grid item lg={12} className={'text-stack'} style={{width:'100%'}}>
 
                                 {this.state.tasks.map((task, idx) => {
                                     if(task){

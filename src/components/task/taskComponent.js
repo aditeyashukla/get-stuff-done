@@ -107,7 +107,7 @@ export default function TaskComponent(props) {
     }
     return (
         <>
-            <div onContextMenu={show}>
+            <div style={{width:'100%'}}onContextMenu={show}>
                 <Paper elevation={3} className={rec ? "task-paper reccuring" : "task-paper one-time"}>
                     <Grid
                         className={"task-grid"}
@@ -115,20 +115,22 @@ export default function TaskComponent(props) {
                         direction="row"
                         justifyContent="flex-start"
                         alignItems="flex-start"
+                        // spacing={1}
                     >
                         <Grid item className={"task-checkbox"} >
                             <FormControlLabel
                                 control={<ColouredCheckbox onChange={checkTask} checked={complete} icon={<RadioButtonUncheckedOutlinedIcon fontSize="medium" />} checkedIcon={<CheckCircleIcon fontSize="medium" />} name="checkedH" />}
                             />
                         </Grid>
-                        <Grid item sm={6} className={"task-name"} >
+                        <Grid item xs={5} className={"task-name"} >
                             <p className={complete ? "strikethrough" : undefined} style={{ margin: 0 }}>{t.name}</p>
                         </Grid>
-                        <Grid item sm={4} className={"task-days"} ><p className={complete ? "strikethrough" : undefined} style={{ margin: 0 }}>{returnDTString(t.days, t.time)}</p></Grid>
-                        <Grid item sm={1} className={"task-icons"}>
+                        <Grid item xs={4} className={"task-days"} ><p className={complete ? "strikethrough" : undefined} style={{ margin: 0 }}>{returnDTString(t.days, t.time)}</p></Grid>
+                        <Grid item xs={1} className={"task-icons"}>
                             <IconButton aria-label="edit" onClick={editTask}><EditIcon /></IconButton>
                             <IconButton aria-label="delete" onClick={deleteTask} ><DeleteIcon /></IconButton>
                         </Grid>
+                        
 
                     </Grid>
                 </Paper>

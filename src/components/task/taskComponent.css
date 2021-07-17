@@ -13,11 +13,11 @@
     background-image: linear-gradient(to right, #485051, #485051 99.2%, #99c7b9 99.2%, #99c7b9 100%) !important;
 }
 .task-name{
-    margin-top: 0.7% !important;
+    margin-top: 0.5em !important;
 }
 
 .task-days{
-    margin-top: 0.7% !important;
+    margin-top: 0.5em !important;
     color: #8e8e8e;
 }
 
@@ -30,7 +30,7 @@
 
 .task-icons .MuiIconButton-root{
     padding: 0 ;
-    padding-top: 8.7% !important;
+    padding-top: 0.4em !important;
 }
 .task-icons .MuiIconButton-root:hover{
     background-color: transparent !important;
