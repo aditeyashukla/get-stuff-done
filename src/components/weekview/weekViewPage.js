@@ -28,6 +28,7 @@ export default class WeekView extends React.Component {
 
         this.state = {
             user: "",
+            displayName: "",
             tasks: {},
             taskKeys: {}
         };
@@ -45,8 +46,9 @@ export default class WeekView extends React.Component {
     onDataChange(items) {
         let uobj = items.val()
         if (uobj === null) {
-            TaskDataService.make_user_obj(this.props.user)
+            TaskDataService.make_user_obj(this.props.user, "")
         } else {
+            this.setState({displayName: uobj["displayName"]})
             let all_tasks = {}
             let all_tasks_keys = {}
             for (let i = 0; i < 7; i++) {
@@ -68,7 +70,7 @@ export default class WeekView extends React.Component {
         return (
             <FirebaseAuthConsumer>
                 {({ isSignedIn, user, providerId }) => {
-
+ 
                     return (
                         <Grid
                             className={'home-head'}
@@ -78,7 +80,7 @@ export default class WeekView extends React.Component {
                             alignItems="flex-start"
                         >
                             <Grid item className={'text-stack home-text-head'} sm={12}>
-                                <p className={"greeting"}>Hi {user.displayName.split(" ")[0]}</p>
+                                <p className={"greeting"}>Hi {this.state.displayName.split(" ")[0]}</p>
                                 <h1 className={"date-mark"}>Here's a look at your week</h1>
                             </Grid>
                             <Divider light={true} style={{ width: '100%',marginBottom: 15, marginTop: 15 }} />

@@ -26,6 +26,7 @@ export default class HomePage extends React.Component {
 
         this.state = {
             user: "",
+            displayName: "",
             tasks: [],
             taskKeys: []
         };
@@ -48,8 +49,10 @@ export default class HomePage extends React.Component {
         //CLEAR WEEK MOVED TO APP
         // TaskDataService.clearPastWeek(this.props.user.uid, day)
         if (uobj === null) {
-            TaskDataService.make_user_obj(this.props.user)
+            TaskDataService.make_user_obj(this.props.user, "")
         } else {
+            console.log(uobj)
+            this.setState({displayName: uobj["displayName"]})
             let tasks_for_day = uobj['user_week'][day]['tasks']
             if (tasks_for_day) {
                 tasks = tasks_for_day.map(tsk => uobj['all_tasks'][tsk])
@@ -99,7 +102,7 @@ export default class HomePage extends React.Component {
                             alignItems="flex-start"
                         >
                             <Grid item className={'text-stack home-text-head'} sm={12}>
-                                <p className={"greeting"}>Hi {user.displayName.split(" ")[0]}</p>
+                                <p className={"greeting"}>Hi {this.state.displayName.split(" ")[0]}</p>
                                 <h1 className={"date-mark"}>It's {this.dayToday(this.today.getDay())}, {String(this.today.getDate()).padStart(2, '0')}<sup>{this.superscript(this.today.getDate())}</sup>  {monthNames[this.today.getMonth()]}</h1>
                                 <p className={"motivation"}>Have a nice day or something idk</p>
                             </Grid>
