@@ -103,7 +103,7 @@ export default class RandomTasksPage extends React.Component {
                             justifyContent="flex-start"
                             alignItems="flex-start"
                         >
-                            <Grid item className={'text-stack home-text-head'} sm={12}>
+                            <Grid item className={'text-stack home-text-head'} style={{marginTop: '45px'}} sm={12}>
                                 {/* <p className={"greeting"}>Hi {this.state.displayName.split(" ")[0]}</p> */}
                                 <h1 className={"date-mark"}>Here are all your random tasks</h1>
                                 <p className={"motivation"}>Tasks with no days end up here </p>

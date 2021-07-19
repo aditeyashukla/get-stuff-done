@@ -83,7 +83,8 @@ const useStyles = makeStyles({
     boxShadow: '5px 5px #8888880d',
     borderRadius: '6px',
     textAlign: 'center',
-    fontFamily: 'Maven Pro'
+    fontFamily: 'Maven Pro',
+    outline: 'none'
   },
   form: {
     color: '#ffffff'
