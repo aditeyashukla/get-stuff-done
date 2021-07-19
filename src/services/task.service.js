@@ -12,6 +12,10 @@ class TaskDataService {
     return firebase.database().ref(`${user}/user_week`);
   }
 
+  get_random_tasks(user){
+    return firebase.database().ref(`${user}/random_tasks`)
+  }
+
   get_user_obj(user) {
     return firebase.database().ref(`${user}`)
   }
@@ -77,8 +81,8 @@ class TaskDataService {
   create(task_object, uid, random) {
 
     if (random) {
-      let randTaskRef = firebase.database().ref(`${uid}/random_tasks`);
-      let key = randTaskRef.push(task_object);
+      let randTaskRef = firebase.database().ref(`${uid}`);
+      let key = randTaskRef.child("random_tasks").push(task_object);
     } else {
       let expiry = new Date()
       let task_d = parseInt(task_object['days'][task_object['days'].length - 1])

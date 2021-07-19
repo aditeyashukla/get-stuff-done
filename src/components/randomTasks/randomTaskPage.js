@@ -34,29 +34,30 @@ export default class RandomTasksPage extends React.Component {
     }
 
     componentDidMount() {
-        TaskDataService.get_user_obj(this.userID).on("value", this.onDataChange);
+        TaskDataService.get_random_tasks(this.userID).on("value", this.onDataChange);
     }
 
     componentWillUnmount() {
-        TaskDataService.get_user_obj(this.userID).off("value", this.onDataChange);
+        TaskDataService.get_random_tasks(this.userID).off("value", this.onDataChange);
     }
 
     onDataChange(items) {   
+        console.log("data change")
         let tasks = [];
         let uobj = items.val()
-        // console.log(uobj)
+        console.log(uobj)
         let day = this.today.getDay().toString()
         //CLEAR WEEK MOVED TO APP
         // TaskDataService.clearPastWeek(this.props.user.uid, day)
         if (uobj === null) {
-            TaskDataService.make_user_obj(this.props.user, "")
+            this.setState({ tasks: {}, taskKeys: [] })
         } else {
             console.log(uobj)
-            this.setState({displayName: uobj["displayName"]})
-            tasks = uobj['random_tasks']
-            console.log("Tasks",tasks)
+            // this.setState({displayName: uobj["displayName"]})
+            // tasks = uobj['random_tasks']
+            console.log("Tasks",uobj)
             if(tasks){
-                this.setState({ tasks: tasks, taskKeys: Object.keys(tasks) })
+                this.setState({ tasks: uobj, taskKeys: Object.keys(uobj) })
             }
             
         }
@@ -103,7 +104,7 @@ export default class RandomTasksPage extends React.Component {
                             alignItems="flex-start"
                         >
                             <Grid item className={'text-stack home-text-head'} sm={12}>
-                                <p className={"greeting"}>Hi {this.state.displayName.split(" ")[0]}</p>
+                                {/* <p className={"greeting"}>Hi {this.state.displayName.split(" ")[0]}</p> */}
                                 <h1 className={"date-mark"}>Here are all your random tasks</h1>
                                 <p className={"motivation"}>Tasks with no days end up here </p>
                             </Grid>

@@ -137,20 +137,21 @@ function App() {
     checked: {},
   })((props) => <Checkbox color="default" {...props} />);
 
+  async function deleteTask(e, uid){
+    e.preventDefault()
+    setModalError("")
+    let random = value === "random"
+    TaskDataService.delete(uid, editTaskID, random);
+    setModalOpen(false)
+    setTaskRandom(false)
+  }
+
   async function addNewTask(e, uid) {
     e.preventDefault()
     setModalError("")
-    let random = false;
-    //console.log(modalDays)
     let dayList = Object.keys(modalDays).filter(key => modalDays[key])
-    //console.log(dayList)
-
-
-    if (dayList.length < 1) {
-      //console.log(dayList)
-      // setModalError("You need to specify at least one day")
-      random = true
-    }
+    let random = dayList.length < 1;
+    if(value === "random"){random = true}
     let task_object = {
       "name": modalTaskName,
       "repeat": modalRepeating,
@@ -162,6 +163,7 @@ function App() {
     if(taskEdit){
       TaskDataService.editTask(uid, editTaskID, task_object, random)
     }else{
+      console.log("creating", task_object,random)
       TaskDataService.create(task_object,uid,random)
     }
     setModalOpen(false)
@@ -288,7 +290,7 @@ function App() {
                         <FormControl fullWidth>
                           <TextField className={classes.form} id="standard-basic" label="Task Title" required value={modalTaskName} onChange={e => setmodalTaskName(e.target.value)} />
                           
-                          {!taskRandom &&
+                          {!(taskRandom || value === "random") &&
                             <>
                             <br />
                           <FormControlLabel
@@ -318,6 +320,9 @@ function App() {
                           <br />
                           <Button type="submit" onClick={e => addNewTask(e, user.uid)} className={classes.weekdays} variant={"contained"}>{taskEdit ? "Edit Task" : "Add Task"}</Button>
                           <br />
+                          {taskEdit &&
+                          <Button type="submit" onClick={e => deleteTask(e, user.uid)} className={classes.weekdays} color="primary" variant={"outlined"}>Delete Task</Button>
+                          }
                           <p>{modalError}</p>
                         </FormControl>
                       </form>

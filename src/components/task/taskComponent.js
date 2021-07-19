@@ -128,21 +128,19 @@ export default function TaskComponent(props) {
                                 control={<ColouredCheckbox onChange={checkTask} checked={complete} icon={<RadioButtonUncheckedOutlinedIcon fontSize="medium" />} checkedIcon={<CheckCircleIcon fontSize="medium" />} name="checkedH" />}
                             />
                         </Grid>
-                        <Grid item xs={6} className={"task-name"} >
+                        <Grid item xs={9} className={"task-name"} >
                             <p className={complete ? "strikethrough" : undefined} style={{ margin: 0 }}>{t.name}</p>
                         </Grid>
-                        {!t.random &&
-                        <Grid item xs={4} className={"task-days"} ><p className={complete ? "strikethrough" : undefined} style={{ margin: 0 }}>{returnDTString(t.days, t.time)}</p></Grid>
-                        }
+                        
                         
                         <Grid item xs={1} className={"task-icons"}>
                             <IconButton aria-label="edit" onClick={editTask}><EditIcon fontSize="small"/></IconButton>
                             {/* <IconButton aria-label="delete" onClick={deleteTask} ><DeleteIcon fontSize="small"/></IconButton> */}
                         </Grid>
-                        <Grid item xs={1} className={"task-icons"}>
-                            {/* <IconButton aria-label="edit" onClick={editTask}><EditIcon fontSize="small"/></IconButton> */}
-                            <IconButton aria-label="delete" onClick={deleteTask} ><DeleteIcon fontSize="small"/></IconButton>
-                        </Grid>
+                        
+                        {/* {!t.random &&
+                        <Grid item xs={4} className={"task-days"} ><p className={complete ? "strikethrough" : undefined} style={{ margin: 0 }}>{returnDTString(t.days, t.time)}</p></Grid>
+                        } */}
                         
 
                     </Grid>
