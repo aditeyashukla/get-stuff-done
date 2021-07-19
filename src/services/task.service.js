@@ -16,8 +16,9 @@ class TaskDataService {
     return firebase.database().ref(`${user}`)
   }
 
-  make_user_obj(user) {
+  make_user_obj(user, displayName) {
     let ref = firebase.database().ref(`/`)
+    console.log("SETTING NAME TO", displayName)
     return ref.child(user.uid).set({
       "all_tasks": {
       },
@@ -31,7 +32,7 @@ class TaskDataService {
         { "checked": false, "tasks": [], "name": "sat" }
       ],
       "email": user.email,
-      "displayName": user.displayName
+      "displayName": displayName
     });
   }
 
