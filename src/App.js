@@ -97,6 +97,7 @@ const useStyles = makeStyles({
 
 function App() {
   const classes = useStyles();
+  const [mainUser, setMainUser] = React.useState({})
   const [value, setValue] = React.useState('home');
 
   const [modalOpen, setModalOpen] = React.useState(false)
@@ -109,19 +110,19 @@ function App() {
   const [editTaskID, setEditTaskID] = React.useState("")
   const [clearedWeek, setWeekClear] = React.useState(false)
 
-  const PageReturn = (user) => {
-    console.log("AAA")
-    switch (value) {
-      case 'home':
-        return <HomePage key={"home"} user={user} />;
-      case 'weekview':
-        return "week";
-      case 'settings':
-        return "settings";
-      default:
-        return 'home'
-    }
-  }
+  // const PageReturn = (user) => {
+  //   console.log("AAA")
+  //   switch (value) {
+  //     case 'home':
+  //       return <HomePage key={"home"} user={user} />;
+  //     case 'weekview':
+  //       return "week";
+  //     case 'settings':
+  //       return "settings";
+  //     default:
+  //       return 'home'
+  //   }
+  // }
 
   const ColouredCheckbox = withStyles({
     root: {
@@ -154,9 +155,9 @@ function App() {
         "complete": false
       }
       if(taskEdit){
-        TaskDataService.editTask(uid, editTaskID, task_object)
+        TaskDataService.editTask(mainUser.uid, editTaskID, task_object)
       }else{
-        TaskDataService.create(task_object,uid)
+        TaskDataService.create(task_object,mainUser.uid)
       }
       
       setModalOpen(false)
@@ -184,10 +185,13 @@ function App() {
                 let day = (new Date()).getDay().toString()
                 //CLEAR WEEK
                 console.log("CLEARING WEEK")
-                TaskDataService.clearPastWeek(user.uid, day)
+                console.log(mainUser,"j",user)
+                TaskDataService.clearPastWeek(user.uid, day, isSignedIn)
                 setWeekClear(true)
               }
+              
               return isSignedIn ? (<>
+
                 {value === "home" &&
                 <HomePage key={"home"} user={user} open={setModalOpen} setName={setmodalTaskName}
                 setRep={setModalRepeating} setDays={setModalDays} setTime={setModalTime} setEdit={setTaskEdit}
@@ -293,7 +297,7 @@ function App() {
                   </Fade>
                 </Modal>
 
-              </>) : (<LoginPage />)
+              </>) : (<LoginPage setUser={setMainUser}/>)
             }}
           </FirebaseAuthConsumer>
         </Paper>

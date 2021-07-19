@@ -22,6 +22,8 @@ export default class HomePage extends React.Component {
         super(props);
 
         this.userID = props.user.uid
+        this.user = props.user
+        
         this.onDataChange = this.onDataChange.bind(this);
 
         this.state = {
@@ -89,7 +91,7 @@ export default class HomePage extends React.Component {
         return (
             <FirebaseAuthConsumer>
                 {({ isSignedIn, user, providerId }) => {
-
+                   
                     return (
                         <Grid
                             className={'home-head'}
@@ -99,7 +101,8 @@ export default class HomePage extends React.Component {
                             alignItems="flex-start"
                         >
                             <Grid item className={'text-stack home-text-head'} sm={12}>
-                                <p className={"greeting"}>Hi {user.displayName.split(" ")[0]}</p>
+                                <p className={"greeting"}>Hi bud</p>
+                                {/* {this.user.displayName.split(" ")[0]}</p> */}
                                 <h1 className={"date-mark"}>It's {this.dayToday(this.today.getDay())}, {String(this.today.getDate()).padStart(2, '0')}<sup>{this.superscript(this.today.getDate())}</sup>  {monthNames[this.today.getMonth()]}</h1>
                                 <p className={"motivation"}>Have a nice day or something idk</p>
                             </Grid>
@@ -109,7 +112,7 @@ export default class HomePage extends React.Component {
 
                                 {this.state.tasks.map((task, idx) => {
                                     if(task){
-                                        return <TaskComponent key={"task-" + idx} user={user.uid} task={task} taskKey={this.state.taskKeys[idx]} open={this.props.open}
+                                        return <TaskComponent key={"task-" + idx} user={this.user.uid} task={task} taskKey={this.state.taskKeys[idx]} open={this.props.open}
                                         setName={this.props.setName} setRep={this.props.setRep} setDays={this.props.setDays}
                                         setTime={this.props.setTime} setEdit={this.props.setEdit} setEditTaskID={this.props.setEditTaskID} />
                                     }

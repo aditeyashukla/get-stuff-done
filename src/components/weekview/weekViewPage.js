@@ -68,7 +68,7 @@ export default class WeekView extends React.Component {
         return (
             <FirebaseAuthConsumer>
                 {({ isSignedIn, user, providerId }) => {
-
+ 
                     return (
                         <Grid
                             className={'home-head'}
@@ -78,7 +78,7 @@ export default class WeekView extends React.Component {
                             alignItems="flex-start"
                         >
                             <Grid item className={'text-stack home-text-head'} sm={12}>
-                                <p className={"greeting"}>Hi {user.displayName.split(" ")[0]}</p>
+                                <p className={"greeting"}>Hi </p>
                                 <h1 className={"date-mark"}>Here's a look at your week</h1>
                             </Grid>
                             <Divider light={true} style={{ width: '100%',marginBottom: 15, marginTop: 15 }} />
