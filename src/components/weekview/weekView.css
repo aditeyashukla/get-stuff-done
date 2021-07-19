@@ -1,6 +1,7 @@
 .home-head{
     text-align: left;
-    padding: 1%
+    padding: 1%;
+    margin-top:15px
 }
 
 .home-text-head{
@@ -14,7 +15,7 @@
 }
 
 .date-mark{
-    font-size: 40px;
+    font-size: 33px;
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -39,7 +40,7 @@
 }
 
 .MuiAccordionSummary-content{
-    font-size: 24px !important;
+    font-size: 20px !important;
     /* margin-left: 43% !important; */
     /* margin-top: 25px !important; */
 }

@@ -75,6 +75,7 @@ class TaskDataService {
   }
 
   create(task_object, uid) {
+    console.log(uid)
     let expiry = new Date()
     let task_d = parseInt(task_object['days'][task_object['days'].length - 1])
 

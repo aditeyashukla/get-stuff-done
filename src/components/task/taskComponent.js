@@ -126,7 +126,7 @@ export default function TaskComponent(props) {
                             <p className={complete ? "strikethrough" : undefined} style={{ margin: 0 }}>{t.name}</p>
                         </Grid>
                         <Grid item xs={4} className={"task-days"} ><p className={complete ? "strikethrough" : undefined} style={{ margin: 0 }}>{returnDTString(t.days, t.time)}</p></Grid>
-                        <Grid item xs={1} className={"task-icons"}>
+                        <Grid item xs={2} className={"task-icons"}>
                             <IconButton aria-label="edit" onClick={editTask}><EditIcon /></IconButton>
                             <IconButton aria-label="delete" onClick={deleteTask} ><DeleteIcon /></IconButton>
                         </Grid>

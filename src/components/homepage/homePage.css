@@ -1,6 +1,7 @@
 .home-head{
     text-align: left;
-    padding: 1%
+    padding: 1%;
+    margin-top:15px
 }
 
 .home-text-head{
@@ -14,7 +15,7 @@
 }
 
 .date-mark{
-    font-size: 40px;
+    font-size: 33px;
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -22,7 +23,7 @@
 .motivation{
     font-weight: 200;
     color: #99c7b9;
-    font-size: 20px;
+    font-size: 16px;
     margin-top: 10px;
 }
 

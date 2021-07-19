@@ -97,7 +97,6 @@ const useStyles = makeStyles({
 
 function App() {
   const classes = useStyles();
-  const [mainUser, setMainUser] = React.useState({})
   const [value, setValue] = React.useState('home');
 
   const [modalOpen, setModalOpen] = React.useState(false)
@@ -155,9 +154,9 @@ function App() {
         "complete": false
       }
       if(taskEdit){
-        TaskDataService.editTask(mainUser.uid, editTaskID, task_object)
+        TaskDataService.editTask(uid, editTaskID, task_object)
       }else{
-        TaskDataService.create(task_object,mainUser.uid)
+        TaskDataService.create(task_object,uid)
       }
       
       setModalOpen(false)
@@ -185,7 +184,6 @@ function App() {
                 let day = (new Date()).getDay().toString()
                 //CLEAR WEEK
                 console.log("CLEARING WEEK")
-                console.log(mainUser,"j",user)
                 TaskDataService.clearPastWeek(user.uid, day, isSignedIn)
                 setWeekClear(true)
               }
@@ -297,7 +295,7 @@ function App() {
                   </Fade>
                 </Modal>
 
-              </>) : (<LoginPage setUser={setMainUser}/>)
+              </>) : (<LoginPage/>)
             }}
           </FirebaseAuthConsumer>
         </Paper>
