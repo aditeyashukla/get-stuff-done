@@ -1,4 +1,4 @@
-#Get stuff done
+# Get stuff done
 
 1. I wanted a to do app that didnt need me to enter tasks that would repeat every week
 2. I like scratching off tasks from a to do app that looks good

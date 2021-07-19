@@ -59,8 +59,7 @@
 	content: '';
     position: absolute;
     display: block;
-    width: 120%;
-    margin-left: -7px;
+    width: 100%;
     height: 2px;
     box-shadow: 0 1px rgb(160 160 160 / 60%);
     margin-top: -0.6em;
