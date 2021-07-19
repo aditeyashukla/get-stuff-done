@@ -33,6 +33,7 @@ import DateRangeIcon from '@material-ui/icons/DateRange';
 import SettingsIcon from '@material-ui/icons/Settings';
 import AddIcon from '@material-ui/icons/Add';
 import ClearIcon from '@material-ui/icons/Clear';
+import SelectAllIcon from '@material-ui/icons/SelectAll';
 
 //Fab menu
 import { Fab, Action } from 'react-tiny-fab';
@@ -46,6 +47,7 @@ import LoginPage from './components/login/loginPage';
 import HomePage from './components/homepage/homePage';
 import WeekView from './components/weekview/weekViewPage';
 import SettingsPage from './components/settings/settingsPage';
+import RandomTasksPage from './components/randomTasks/randomTaskPage';
 
 import TaskDataService from './services/task.service';
 
@@ -103,11 +105,12 @@ function App() {
   const [modalOpen, setModalOpen] = React.useState(false)
   const [modalTaskName, setmodalTaskName] = React.useState("")
   const [modalRepeating, setModalRepeating] = React.useState(false)
-  const [modalDays, setModalDays] = React.useState({ 0: false, 1: false, 2: false, 3: false, 4: false, 5: false, 6: false })
+  const [modalDays, setModalDays] = React.useState(dayObjwithToday())
   const [modalTime, setModalTime] = React.useState(null)
   const [modalError, setModalError] = React.useState("")
   const [taskEdit, setTaskEdit] = React.useState(false)
   const [editTaskID, setEditTaskID] = React.useState("")
+  const [ taskRandom, setTaskRandom] = React.useState(false)
   const [clearedWeek, setWeekClear] = React.useState(false)
 
   const PageReturn = (user) => {
@@ -137,37 +140,45 @@ function App() {
   async function addNewTask(e, uid) {
     e.preventDefault()
     setModalError("")
+    let random = false;
     //console.log(modalDays)
     let dayList = Object.keys(modalDays).filter(key => modalDays[key])
     //console.log(dayList)
 
 
     if (dayList.length < 1) {
-      console.log(dayList)
-      setModalError("You need to specify at least one day")
+      //console.log(dayList)
+      // setModalError("You need to specify at least one day")
+      random = true
     }
-    else {
-      let task_object = {
-        "name": modalTaskName,
-        "repeat": modalRepeating,
-        "days": dayList,
-        "time": modalTime,
-        "complete": false
-      }
-      if(taskEdit){
-        TaskDataService.editTask(uid, editTaskID, task_object)
-      }else{
-        TaskDataService.create(task_object,uid)
-      }
-      
-      setModalOpen(false)
+    let task_object = {
+      "name": modalTaskName,
+      "repeat": modalRepeating,
+      "days": dayList,
+      "time": modalTime,
+      "complete": false,
+      "random": random,
     }
+    if(taskEdit){
+      TaskDataService.editTask(uid, editTaskID, task_object, random)
+    }else{
+      TaskDataService.create(task_object,uid,random)
+    }
+    setModalOpen(false)
+    setTaskRandom(false)
+  }
+
+  function dayObjwithToday(){
+    let day_bp = { 0: false, 1: false, 2: false, 3: false, 4: false, 5: false, 6: false }
+    let today = new Date()
+    day_bp[today.getDay()] = true
+    return day_bp
   }
 
   function clearModal() {
     setmodalTaskName("");
     setModalRepeating(false);
-    setModalDays({ 0: false, 1: false, 2: false, 3: false, 4: false, 5: false, 6: false })
+    setModalDays(dayObjwithToday())
     setModalTime(null)
     setModalError("")
   }
@@ -198,6 +209,13 @@ function App() {
                   <WeekView key={"home"} user={user} open={setModalOpen} setName={setmodalTaskName}
                   setRep={setModalRepeating} setDays={setModalDays} setTime={setModalTime} setEdit={setTaskEdit}
                   setEditTaskID={setEditTaskID} />
+                }
+                {value === "random" &&
+                  <RandomTasksPage
+                  key={"home"} user={user} open={setModalOpen} setName={setmodalTaskName}
+                  setRep={setModalRepeating} setDays={setModalDays} setTime={setModalTime} setEdit={setTaskEdit}
+                  setEditTaskID={setEditTaskID} setTaskRandom={setTaskRandom}
+                  />
                 }
                 {value === "settings" &&
                   <SettingsPage/>
@@ -235,6 +253,14 @@ function App() {
                   </Action>
 
                   <Action
+                    text="Random Tasks"
+                    onClick={(e) => setValue("random")}
+                  // onClick={handleEmailOnClick}
+                  >
+                    <SelectAllIcon />
+                  </Action>
+
+                  <Action
                     text="Settings"
                     onClick={(e) => setValue("settings")}
                   >
@@ -261,7 +287,10 @@ function App() {
                       <form onSubmit={addNewTask}>
                         <FormControl fullWidth>
                           <TextField className={classes.form} id="standard-basic" label="Task Title" required value={modalTaskName} onChange={e => setmodalTaskName(e.target.value)} />
-                          <br />
+                          
+                          {!taskRandom &&
+                            <>
+                            <br />
                           <FormControlLabel
                             control={<ColouredCheckbox checked={modalRepeating}
                               onChange={e => setModalRepeating(e.target.checked)}
@@ -269,7 +298,7 @@ function App() {
                               color="primary" />}
                             label="Repeat Every Week"
                           />
-                          <br />
+                            <br />
                           <ButtonGroup color="primary" className={classes.weekdays} id={"aa"} aria-label="outlined primary button group">
                             <Button onClick={e => setModalDays({ ...modalDays, 1: !modalDays[1] })} variant={modalDays[1] ? "contained" : "outlined"}>M</Button>
                             <Button onClick={e => setModalDays({ ...modalDays, 2: !modalDays[2] })} variant={modalDays[2] ? "contained" : "outlined"}>T</Button>
@@ -284,6 +313,8 @@ function App() {
                             value={modalTime}
                             onChange={e => setModalTime(e)}
                           />
+                          </>
+                          }
                           <br />
                           <Button type="submit" onClick={e => addNewTask(e, user.uid)} className={classes.weekdays} variant={"contained"}>{taskEdit ? "Edit Task" : "Add Task"}</Button>
                           <br />
