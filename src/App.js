@@ -63,6 +63,7 @@ const useStyles = makeStyles({
     width: '90%',
     height: '100vh',
     margin: '0% 5% 3% 5%',
+    boxShadow:'none',
     backgroundColor: '#2d2f2f',
     overflowY: 'auto',
     overflowX: 'hidden',
@@ -175,7 +176,7 @@ function App() {
 
     <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
       <div className="App">
-        <Paper className={classes.mainPaper} elevation={3}>
+        <Paper className={classes.mainPaper} >
 
           
           <FirebaseAuthConsumer>
@@ -207,7 +208,7 @@ function App() {
                   // actionButtonStyles={actionButtonStyles}
                   // style={style}
                   icon={"☰"}
-                  // event={event}
+                  event={'click'}
                   alwaysShowTitle={true}
                 // onClick={}
                 >

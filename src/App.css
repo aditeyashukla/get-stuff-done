@@ -10,7 +10,7 @@ html{
 }
 .App {
   text-align: center;
-  background-color: #212020;
+  background-color: #2c2f2f;
   /* height: 110vh; */
  /* width: 100vw; */
 }
@@ -23,7 +23,7 @@ html{
 
 .rtf{
   bottom: 0em !important;
-  right: 4% !important;
+  right: 2% !important;
 }
 
 .rtf--ab{

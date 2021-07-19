@@ -1,0 +1,8 @@
+{
+    "appId": "com.aditeyashukla.getstuffdone",
+    "appName": "Get Stuff Done",
+    "bundledWebRuntime": false,
+    "npmClient": "npm",
+    "webDir": "build",
+    "cordova": {}
+  }

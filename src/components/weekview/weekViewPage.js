@@ -84,7 +84,7 @@ export default class WeekView extends React.Component {
                                 <h1 className={"date-mark"}>Here's a look at your week</h1>
                             </Grid>
                             <Divider light={true} style={{ width: '100%',marginBottom: 15, marginTop: 15 }} />
-                            <Grid item lg={12}className={'text-stack'} >
+                            <Grid item lg={12}className={'text-stack'} style={{flexGrow:1}} >
                             
                                 {Object.keys(this.state.tasks).map((day_id, index) => {
                                     return (

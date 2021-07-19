@@ -1,0 +1,7 @@
+{
+    "name": "Get Stuff Done",
+    "integrations": {
+      "capacitor": {}
+    },
+    "type": "react"
+  }

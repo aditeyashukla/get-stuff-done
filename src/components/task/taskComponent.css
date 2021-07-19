@@ -1,8 +1,9 @@
 .task-paper{
     margin: 1% 0 0 0;
     padding: 0.5% 0 0.5% 1% !important;
-    font-size: 20px !important;
+    font-size: 16px !important;
     color: #fff !important;
+    word-wrap: break-word;
 }
 
 .reccuring{
@@ -13,14 +14,23 @@
     background-image: linear-gradient(to right, #485051, #485051 99.2%, #99c7b9 99.2%, #99c7b9 100%) !important;
 }
 .task-name{
-    margin-top: 0.5em !important;
+    margin-top: 0.65em !important;
 }
 
 .task-days{
-    margin-top: 0.5em !important;
+    margin-top: 0.55em !important;
+    font-size: 12px;
     color: #8e8e8e;
+    max-width: 20% !important;
+    flex-basis: 20% !important;
 }
 
+.task-checkbox{
+    max-width: 1.6em !important;
+    flex-basis: 1.6em !important;
+    margin-left: 0.2em !important;
+    margin-right: 0.2em !important;
+}
 .task-type{
     height: 100%;
     width: 12px;
