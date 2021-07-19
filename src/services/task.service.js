@@ -74,27 +74,33 @@ class TaskDataService {
     })
   }
 
-  create(task_object, uid) {
-    let expiry = new Date()
-    let task_d = parseInt(task_object['days'][task_object['days'].length - 1])
+  create(task_object, uid, random) {
 
-    let toDay = expiry.getDay()
-    let d = expiry.getDate()
-    let ddiff = task_d < toDay ? 14 + (task_d - toDay) : 7 + (task_d - toDay)
+    if (random) {
+      let randTaskRef = firebase.database().ref(`${uid}/random_tasks`);
+      let key = randTaskRef.push(task_object);
+    } else {
+      let expiry = new Date()
+      let task_d = parseInt(task_object['days'][task_object['days'].length - 1])
 
-    expiry.setDate(ddiff + d)
-    expiry.setHours(0)
-    expiry.setMinutes(0)
-    expiry.setSeconds(0)
-    expiry.setMilliseconds(0)
-    task_object['expiry'] = expiry.toString()
+      let toDay = expiry.getDay()
+      let d = expiry.getDate()
+      let ddiff = task_d < toDay ? 14 + (task_d - toDay) : 7 + (task_d - toDay)
 
-    let allTasksRef = firebase.database().ref(`${uid}/all_tasks`);
-    let key = allTasksRef.push(task_object);
-    task_object["days"].map(day => {
-      this.addToDaytasks(uid, day, key.key)
-      firebase.database().ref(`${uid}/user_week/${day}`).child('checked').set(false)
-    })
+      expiry.setDate(ddiff + d)
+      expiry.setHours(0)
+      expiry.setMinutes(0)
+      expiry.setSeconds(0)
+      expiry.setMilliseconds(0)
+      task_object['expiry'] = expiry.toString()
+      let allTasksRef = firebase.database().ref(`${uid}/all_tasks`);
+      let key = allTasksRef.push(task_object);
+      task_object["days"].map(day => {
+        this.addToDaytasks(uid, day, key.key)
+        firebase.database().ref(`${uid}/user_week/${day}`).child('checked').set(false)
+      })
+    }
+
   }
 
   addToDaytasks(uid, day, key) {
@@ -133,9 +139,15 @@ class TaskDataService {
 
   }
 
-  changeTaskStatus(user, key, status) {
-    let ref = firebase.database().ref(`${user}/all_tasks/${key}`);
+  changeTaskStatus(user, key, status,random) {
+    if(random){
+      let randTaskRef = firebase.database().ref(`${uid}/random_tasks`);
+      randTaskRef.child(key).update({ "complete": status })
+    }else{
+      let ref = firebase.database().ref(`${user}/all_tasks/${key}`);
     return ref.update({ "complete": status })
+    }
+    
   }
 
   daysChanged(oldD, newD) {
@@ -144,46 +156,57 @@ class TaskDataService {
     return [addDays, delDays]
   }
 
-  editTask(uid, key, task) {
-    let all_task_ref = firebase.database().ref(`${uid}/all_tasks`)
-    all_task_ref.get().then((snapshot) => {
-      if (snapshot.exists()) {
-        //get userobj
-        let all_tasks = snapshot.val()
-        //check if days changed
-        let [addDays, deleteDays] = this.daysChanged(all_tasks[key]['days'], task['days'])
-        //update in all tasks
-        if(task['time'] === undefined){task['time'] = null}
-        console.log("updating",key,task)
-        all_task_ref.child(key).update(task)
-        //for each in days added, add to user week
-        //for each in days deleted, add to user week
-        addDays.map(ad => {
-          this.addToDaytasks(uid, ad, key)
-        })
-        deleteDays.map(ad => {
-          this.deleteFromDaytasks(uid, ad, key)
-        })
-      }
-    })
+  editTask(uid, key, task, random = false) {
+    if (random) {
+      let randTaskRef = firebase.database().ref(`${uid}/random_tasks`);
+      randTaskRef.child(key).update(task)
+    } else {
+      let all_task_ref = firebase.database().ref(`${uid}/all_tasks`)
+      all_task_ref.get().then((snapshot) => {
+        if (snapshot.exists()) {
+          //get userobj
+          let all_tasks = snapshot.val()
+          //check if days changed
+          let [addDays, deleteDays] = this.daysChanged(all_tasks[key]['days'], task['days'])
+          //update in all tasks
+          if (task['time'] === undefined) { task['time'] = null }
+          console.log("updating", key, task)
+          all_task_ref.child(key).update(task)
+          //for each in days added, add to user week
+          //for each in days deleted, add to user week
+          addDays.map(ad => {
+            this.addToDaytasks(uid, ad, key)
+          })
+          deleteDays.map(ad => {
+            this.deleteFromDaytasks(uid, ad, key)
+          })
+        }
+      })
+    }
   }
 
-  delete(uid, key) {
-    let all_task_ref = firebase.database().ref(`${uid}/all_tasks`)
-    all_task_ref.get().then((snapshot) => {
-      if (snapshot.exists()) {
-        //get userobj
-        let all_tasks = snapshot.val()
+  delete(uid, key, random = false) {
+    if (random) {
+      let randTaskRef = firebase.database().ref(`${uid}/random_tasks`);
+      randTaskRef.child(key).remove()
+    }
+    else {
+      let all_task_ref = firebase.database().ref(`${uid}/all_tasks`)
+      all_task_ref.get().then((snapshot) => {
+        if (snapshot.exists()) {
+          //get userobj
+          let all_tasks = snapshot.val()
 
-        //delete in all tasks
-        all_task_ref.child(key).remove()
+          //delete in all tasks
+          all_task_ref.child(key).remove()
 
-        //for each in days delete from user week
-        all_tasks[key]['days'].map(ad => {
-          this.deleteFromDaytasks(uid, ad, key)
-        })
-      }
-    })
+          //for each in days delete from user week
+          all_tasks[key]['days'].map(ad => {
+            this.deleteFromDaytasks(uid, ad, key)
+          })
+        }
+      })
+    }
   }
 
 }

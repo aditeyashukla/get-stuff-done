@@ -56,7 +56,8 @@ export default function TaskComponent(props) {
         let element = e.target
         setComplete(element.checked)
         element.classList.toggle("strikethrough");
-        TaskDataService.changeTaskStatus(user,id,element.checked)
+        let random = 'random' in t ? t.random : false
+        TaskDataService.changeTaskStatus(user,id,element.checked,random)
     }
 
     function returnDTString(days, time) {
@@ -96,14 +97,19 @@ export default function TaskComponent(props) {
         props.setName(t.name)
         props.setRep(t.repeat)
         props.setEditTaskID(id)
-        props.setDays(formatDays(t.days))
-        props.setTime(t.time)
+        if(t.random){
+            props.setTaskRandom(true)
+        }else{
+            props.setDays(formatDays(t.days))
+            props.setTime(t.time)
+        }
         props.setEdit(true)
         props.open(true)
     }
 
     function deleteTask(){
-        TaskDataService.delete(user, id)
+        let random = 'random' in t ? t.random : false
+        TaskDataService.delete(user, id, random)
     }
     return (
         <>
@@ -125,7 +131,10 @@ export default function TaskComponent(props) {
                         <Grid item xs={5} className={"task-name"} >
                             <p className={complete ? "strikethrough" : undefined} style={{ margin: 0 }}>{t.name}</p>
                         </Grid>
+                        {!t.random &&
                         <Grid item xs={4} className={"task-days"} ><p className={complete ? "strikethrough" : undefined} style={{ margin: 0 }}>{returnDTString(t.days, t.time)}</p></Grid>
+                        }
+                        
                         <Grid item xs={1} className={"task-icons"}>
                             <IconButton aria-label="edit" onClick={editTask}><EditIcon /></IconButton>
                             <IconButton aria-label="delete" onClick={deleteTask} ><DeleteIcon /></IconButton>
