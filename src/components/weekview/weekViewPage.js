@@ -54,7 +54,8 @@ export default class WeekView extends React.Component {
             for (let i = 0; i < 7; i++) {
                 all_tasks_keys[i] = uobj['user_week'][i]['tasks']
                 if (all_tasks_keys[i]) {
-                    all_tasks[i] = all_tasks_keys[i].map(tsk => uobj['all_tasks'][tsk])
+                    all_tasks[i] = all_tasks_keys[i].map(tsk => 
+                        {if (uobj.hasOwnProperty('all_tasks')) return uobj['all_tasks'][tsk] })
                 }else{
                     all_tasks[i] = []
                 }
@@ -100,8 +101,9 @@ export default class WeekView extends React.Component {
                                             <AccordionDetails key={`accordion-det-${index}`}>
                                             <Grid item lg={12} className={'text-stack'} style={{width:'100%'}}>
                                                 {this.state.tasks[day_id].map((task, idx) => {
+                                                    
                                                     if (task) {
-                                                        return <TaskComponent key={"task-" + idx} user={user.uid} task={task} taskKey={this.state.taskKeys[idx]} open={this.props.open}
+                                                        return <TaskComponent key={"task-" + +day_id + '_'+idx} user={user.uid} task={task} taskKey={this.state.taskKeys[day_id][idx]} open={this.props.open}
                                                             setName={this.props.setName} setRep={this.props.setRep} setDays={this.props.setDays}
                                                             setTime={this.props.setTime} setEdit={this.props.setEdit} setEditTaskID={this.props.setEditTaskID} />
                                                     }

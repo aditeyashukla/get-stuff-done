@@ -55,7 +55,8 @@ export default class HomePage extends React.Component {
             this.setState({displayName: uobj["displayName"]})
             let tasks_for_day = uobj['user_week'][day]['tasks']
             if (tasks_for_day) {
-                tasks = tasks_for_day.map(tsk => uobj['all_tasks'][tsk])
+                tasks = tasks_for_day.map(tsk => 
+                    {if (uobj.hasOwnProperty('all_tasks')) return uobj['all_tasks'][tsk] })
             }
             this.setState({ tasks: tasks, taskKeys: tasks_for_day })
         }
