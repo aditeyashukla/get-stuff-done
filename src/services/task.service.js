@@ -146,8 +146,8 @@ class TaskDataService {
 
   changeTaskStatus(user, key, status,random) {
     if(random){
-      let randTaskRef = firebase.database().ref(`${uid}/random_tasks`);
-      randTaskRef.child(key).update({ "complete": status })
+      let randTaskRef = firebase.database().ref(`${user}/random_tasks`);
+      randTaskRef.child(`${key}`).update({ "complete": status })
     }else{
       let ref = firebase.database().ref(`${user}/all_tasks/${key}`);
     return ref.update({ "complete": status })
@@ -162,9 +162,10 @@ class TaskDataService {
   }
 
   editTask(uid, key, task, random = false) {
+    console.log('edit')
     if (random) {
       let randTaskRef = firebase.database().ref(`${uid}/random_tasks`);
-      randTaskRef.child(key).update(task)
+      randTaskRef.child(`${key}`).update(task)
     } else {
       let all_task_ref = firebase.database().ref(`${uid}/all_tasks`)
       all_task_ref.get().then((snapshot) => {
@@ -172,11 +173,13 @@ class TaskDataService {
           //get userobj
           let all_tasks = snapshot.val()
           //check if days changed
+          console.log(all_tasks,[key])
           let [addDays, deleteDays] = this.daysChanged(all_tasks[key]['days'], task['days'])
           //update in all tasks
           if (task['time'] === undefined) { task['time'] = null }
           console.log("updating", key, task)
-          all_task_ref.child(key).update(task)
+          all_task_ref.child(`${key}`).update(task)
+          console.log("updtd")
           //for each in days added, add to user week
           //for each in days deleted, add to user week
           addDays.map(ad => {
@@ -193,7 +196,7 @@ class TaskDataService {
   delete(uid, key, random = false) {
     if (random) {
       let randTaskRef = firebase.database().ref(`${uid}/random_tasks`);
-      randTaskRef.child(key).remove()
+      randTaskRef.child(`${key}`).remove()
     }
     else {
       let all_task_ref = firebase.database().ref(`${uid}/all_tasks`)
@@ -203,8 +206,8 @@ class TaskDataService {
           let all_tasks = snapshot.val()
 
           //delete in all tasks
-          all_task_ref.child(key).remove()
-
+          all_task_ref.child(`${key}`).remove()
+          console.log(all_tasks, key)
           //for each in days delete from user week
           all_tasks[key]['days'].map(ad => {
             this.deleteFromDaytasks(uid, ad, key)
